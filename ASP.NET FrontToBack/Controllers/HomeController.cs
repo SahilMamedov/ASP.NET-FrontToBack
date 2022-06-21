@@ -21,6 +21,8 @@ namespace ASP.NET_FrontToBack.Controllers
             HomeVM homeVM = new HomeVM();
             homeVM.Sliders= _context.Sliders.ToList();
             homeVM.SliderContent = _context.SliderContents.FirstOrDefault();
+            homeVM.Categories = _context.Categories.ToList();
+            homeVM.Products = _context.Products.ToList();
             return View(homeVM);
         }
     }

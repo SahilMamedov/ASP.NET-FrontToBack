@@ -19,7 +19,7 @@ namespace ASP.NET_FrontToBack
 
         public Startup(IConfiguration config)
         {
-            _config=config
+            _config = config;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

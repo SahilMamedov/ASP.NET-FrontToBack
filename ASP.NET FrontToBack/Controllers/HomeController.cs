@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ASP.NET_FrontToBack.DAL;
+using ASP.NET_FrontToBack.Models;
+using ASP.NET_FrontToBack.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +11,17 @@ namespace ASP.NET_FrontToBack.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly AppDbContext _context;
+        public HomeController(AppDbContext context)
         {
-            return View();
+            _context = context;
+        }
+        public IActionResult Index()
+        { 
+            HomeVM homeVM = new HomeVM();
+            homeVM.Sliders= _context.Sliders.ToList();
+            homeVM.SliderContent = _context.SliderContents.FirstOrDefault();
+            return View(homeVM);
         }
     }
 }

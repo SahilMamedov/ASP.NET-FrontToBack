@@ -1,5 +1,6 @@
 ﻿using ASP.NET_FrontToBack.DAL;
 using ASP.NET_FrontToBack.Models;
+using ASP.NET_FrontToBack.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,13 +22,27 @@ namespace ASP.NET_FrontToBack.Controllers
         public IActionResult Index()
         {
             List<Product> products = _context.Products.Take(2).Include(p=>p.Category).ToList();
+            ViewBag.ProductCount = _context.Products.Count();
             return View(products);
         }
         
-        public IActionResult LoadMore()
+        public IActionResult LoadMore(int skip)
         {
-            List<Product> products = _context.Products.Skip(2).Take(2).ToList();
-            return Json(products);
+            #region Json
+            //List<Product> products = _context.Products.Skip(2).Take(2).ToList();
+            //List<ProductReturnVM> products = _context.Products.Select(p => new ProductReturnVM
+            //{
+            //    Id=p.Id,
+            //    Name=p.Name,
+            //    Price=p.Price,
+            //    Category=p.Category.Name,
+            //    ImageUrl=p.ImageUrl
+            //}).ToList();
+            #endregion
+           
+            List<Product> products = _context.Products.Include(p=>p.Category).Skip(skip).Take(2).ToList();
+            
+            return PartialView("_LoadMorePartial",products);
         }
 
     }

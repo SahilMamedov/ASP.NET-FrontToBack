@@ -40,9 +40,20 @@ $(document).ready(function () {
     // PRODUCT
 
     // LoadMore
+    let skip = 2;
 
     $(document).on('click', '#LoadMore', function () {
-
+        let productList = $("#productList");
+        $.ajax({
+            url: "/product/loadMore?skip="+skip,
+            method: "get",
+            success: function (res) {
+                productList.append(res)
+                skip += 2
+                if(skip)
+            }
+                
+        })
 
     })
 

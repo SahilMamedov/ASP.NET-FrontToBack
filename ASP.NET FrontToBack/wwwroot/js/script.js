@@ -39,18 +39,36 @@ $(document).ready(function () {
 
     // PRODUCT
 
+    //search
+
+    $(document).on("keyup", "#input-search"), function () {
+        let inputValue = $(this).val();
+        $.ajax({
+
+            url: "home/searchProduct?search=" + inputValue,
+        method: "get",
+            success: function (res) {
+                $("#searchList").append(res)
+            }
+        })
+    }
+
+
     // LoadMore
     let skip = 2;
 
     $(document).on('click', '#LoadMore', function () {
         let productList = $("#productList");
+        let productCount = $("#productCount").val();
         $.ajax({
             url: "/product/loadMore?skip="+skip,
             method: "get",
             success: function (res) {
                 productList.append(res)
                 skip += 2
-                if(skip)
+                if (skip >= productCount) {
+                    $("#LoadMore").remove();
+                }
             }
                 
         })

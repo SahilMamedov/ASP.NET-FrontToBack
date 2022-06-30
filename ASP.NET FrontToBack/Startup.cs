@@ -31,6 +31,10 @@ namespace ASP.NET_FrontToBack
             {
                 option.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
             });
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromMinutes(5);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +46,7 @@ namespace ASP.NET_FrontToBack
             }
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

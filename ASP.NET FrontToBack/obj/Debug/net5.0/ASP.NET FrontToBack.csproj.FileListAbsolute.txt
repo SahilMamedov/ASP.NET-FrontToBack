@@ -133,3 +133,6 @@ C:\Users\Sahil\Desktop\Asp-Dat-Net\ASP.NET FrontToBack\ASP.NET FrontToBack\bin\D
 C:\Users\Sahil\Desktop\Asp-Dat-Net\ASP.NET FrontToBack\ASP.NET FrontToBack\obj\Debug\net5.0\Razor\Views\Product\Index.cshtml.g.cs
 C:\Users\Sahil\Desktop\Asp-Dat-Net\ASP.NET FrontToBack\ASP.NET FrontToBack\obj\Debug\net5.0\Razor\Views\Shared\_LoadMorePartial.cshtml.g.cs
 C:\Users\Sahil\Desktop\Asp-Dat-Net\ASP.NET FrontToBack\ASP.NET FrontToBack\obj\Debug\net5.0\Razor\Views\Shared\_SearchPartial.cshtml.g.cs
+C:\Users\Sahil\Desktop\Asp-Dat-Net\ASP.NET FrontToBack\ASP.NET FrontToBack\obj\Debug\net5.0\Razor\Views\Shared\Components\Product\Default.cshtml.g.cs
+C:\Users\Sahil\Desktop\Asp-Dat-Net\ASP.NET FrontToBack\ASP.NET FrontToBack\obj\Debug\net5.0\Razor\Views\Shared\Components\Footer\Default.cshtml.g.cs
+C:\Users\Sahil\Desktop\Asp-Dat-Net\ASP.NET FrontToBack\ASP.NET FrontToBack\obj\Debug\net5.0\Razor\Views\Shared\Components\Header\Default.cshtml.g.cs

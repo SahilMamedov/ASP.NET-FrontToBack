@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ASP.NET_FrontToBack.DAL;
+using ASP.NET_FrontToBack.Models;
+using ASP.NET_FrontToBack.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +13,65 @@ namespace ASP.NET_FrontToBack.Controllers
 {
     public class BasketController : Controller
     {
+        private readonly AppDbContext _context;
+
+        public BasketController(AppDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult AddItem()
+        public async Task<IActionResult> AddItem(int?id)
         {
-            HttpContext.Session.SetString("name", "Sahil");
-            return Content("");
+            if (id == null) return NotFound();
+            
+            Product dbProduct = await _context.Products.FindAsync(id);
+            if (dbProduct == null) return NotFound();
+            List<BasketVM> products;
+
+            if (Request.Cookies["basket"] == null)
+            {
+               products= new List<BasketVM>();
+            }
+            else
+            {
+               products= JsonConvert.DeserializeObject<List<BasketVM>>((Request.Cookies["basket"]));
+            }
+            BasketVM existProduct = products.Find(x => x.Id == id);
+            if (existProduct == null)
+            {
+                BasketVM basketVM = new BasketVM
+                {
+                    Id = dbProduct.Id,
+                    Name = dbProduct.Name,
+                    Price = dbProduct.Price,
+                    ImageUrl = dbProduct.ImageUrl,
+                    CategoryId = dbProduct.CategoryId,
+                    ProductCount = 1
+                };
+                products.Add(basketVM);
+            }
+            else
+            {
+                existProduct.ProductCount++;
+            }
+
+            
+            
+            
+
+            Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
+
+            return RedirectToAction("index","home");
         }
         public IActionResult ShowItem()
         {
-           string name= HttpContext.Session.GetString("name");
-            return Content(name);
+          string basket=  Request.Cookies["basket"];
+            List<BasketVM> p = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+            return View(p);
         }
     }
 }

@@ -1,0 +1,35 @@
+﻿@model List<BasketVM>
+@{
+    ViewData["Title"] = "ShowItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int Count = 0;
+}
+
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    Count++;
+                <tr>
+                    <th scope="row">Count</th>
+                    <td><img width="50" src="~/img/@item.ImageUrl" /></td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.ProductCount</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

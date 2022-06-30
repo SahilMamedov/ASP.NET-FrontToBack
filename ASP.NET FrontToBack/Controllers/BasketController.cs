@@ -85,5 +85,18 @@ namespace ASP.NET_FrontToBack.Controllers
             }
             return View(products);
         }
+
+        public IActionResult Remove(int? id)
+        {
+
+            List<BasketVM> product;
+            string basket = Request.Cookies["basket"];
+            product = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+
+            product.RemoveAll(item => item.Id == id);
+            Response.Cookies.Append("basket", JsonConvert.SerializeObject(product), new CookieOptions { MaxAge = TimeSpan.FromDays(14) });
+            product = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+            return RedirectToAction("showitem", "basket");
+        }
     }
 }

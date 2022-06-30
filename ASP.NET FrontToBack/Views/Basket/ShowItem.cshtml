@@ -24,15 +24,16 @@
                     @foreach (var item in Model)
                     {
                         Count++;
-                        <tr>
-                            <th scope="row">Count</th>
-                            <td><img width="50" src="~/img/@item.ImageUrl" /></td>
-                            <td>@item.Name</td>
-                            <td>@item.Price</td>
-                            <td>@item.ProductCount</td>
-                            <td>@(item.Price*item.ProductCount)</td>
+                    <tr>
+                        <th scope="row">Count</th>
+                        <td><img width="50" src="~/img/@item.ImageUrl" /></td>
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                        <td>@item.ProductCount</td>
+                        <td>@(item.Price*item.ProductCount)</td>
+                        <td style="cursor:pointer" data-id="@item.Id" class="remove">x</td>
 
-                        </tr>
+                    </tr>
                     }
                 </tbody>
             </table>

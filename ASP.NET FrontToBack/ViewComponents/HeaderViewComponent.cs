@@ -22,10 +22,20 @@ namespace ASP.NET_FrontToBack.ViewComponents
             public async Task<IViewComponentResult> InvokeAsync()
             {
             ViewBag.BasketCount = 0;
-            if (Request.Cookies["basket"] != null)
+            ViewBag.TotalPrice = 0;
+            double totalPrice = 0;
+            string basket = Request.Cookies["basket"];
+            if (basket != null)
             {
-                ViewBag.BasketCount = JsonConvert.DeserializeObject<List<BasketVM>>(Request.Cookies["basket"]).Count();
+                List<BasketVM> products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+                ViewBag.BasketCount = products.Count();
+                foreach (var item in products)
+                {
+                    totalPrice += item.Price * item.ProductCount;
+                }
+
             }
+                ViewBag.TotalPrice = totalPrice;
                 Bio bio = _context.Bio.FirstOrDefault();
                 return View(await Task.FromResult(bio));
 

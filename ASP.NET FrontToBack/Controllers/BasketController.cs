@@ -46,10 +46,6 @@ namespace ASP.NET_FrontToBack.Controllers
                 BasketVM basketVM = new BasketVM
                 {
                     Id = dbProduct.Id,
-                    Name = dbProduct.Name,
-                    Price = dbProduct.Price,
-                    ImageUrl = dbProduct.ImageUrl,
-                    CategoryId = dbProduct.CategoryId,
                     ProductCount = 1
                 };
                 products.Add(basketVM);
@@ -70,8 +66,24 @@ namespace ASP.NET_FrontToBack.Controllers
         public IActionResult ShowItem()
         {
           string basket=  Request.Cookies["basket"];
-            List<BasketVM> p = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
-            return View(p);
+            List<BasketVM> products;
+            if (basket != null)
+            {
+                products= JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+                foreach (var item in products)
+                {
+                    Product dbProduct = _context.Products.FirstOrDefault(p => p.Id == item.Id);
+                    item.Price = dbProduct.Price;
+                    item.Name = dbProduct.Name;
+                    item.ImageUrl = dbProduct.ImageUrl;
+                }
+
+            }
+            else
+            {
+                products = new List<BasketVM>();
+            }
+            return View(products);
         }
     }
 }
